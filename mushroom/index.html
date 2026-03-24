@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>蘑菇倒數追蹤器</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            height: 100dvh; 
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* 頂部現在時間與按鈕 */
+        .header {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2a2a2a;
+            border-bottom: 1px solid #444;
+        }
+
+        /* 讓左右兩邊佔據相同的空間，確保中間的時間完美置中 */
+        .header-left, .header-right {
+            flex: 1;
+            display: flex;
+        }
+        .header-left { justify-content: flex-start; }
+        .header-right { justify-content: flex-end; }
+
+        #menuBtn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0 5px;
+            transition: 0.2s;
+        }
+        #menuBtn:active { opacity: 0.5; }
+
+        #clearAllBtn {
+            background-color: #c0392b;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        #clearAllBtn:active { transform: scale(0.95); opacity: 0.8; }
+
+        #currentTimeDisplay {
+            font-size: 2.5rem;
+            font-weight: 300;
+            font-variant-numeric: tabular-nums;
+            color: #2ecc71;
+            text-align: center;
+        }
+
+        /* 紀錄清單區塊 */
+        .records-list {
+            flex: 1;
+            width: 100%;
+            overflow-y: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .record-item {
+            display: flex;
+            flex-direction: column;
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 15px;
+            border-radius: 12px;
+            gap: 12px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+        }
+
+        .record-item.stopped {
+            border-left-color: #555;
+            opacity: 0.7;
+        }
+
+        .item-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .record-name { font-weight: bold; font-size: 1.1rem; }
+        .record-timer { 
+            font-family: monospace; 
+            font-size: 1.4rem; 
+            font-variant-numeric: tabular-nums;
+        }
+        .timer-expired { color: #e74c3c; font-weight: bold; }
+
+        .item-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .update-zone { display: flex; gap: 6px; flex: 1; }
+        .update-zone input { 
+            width: 100px; 
+            background: #333; 
+            border: 1px solid #555; 
+            color: white; 
+            border-radius: 6px; 
+            padding: 8px; 
+            font-size: 0.9rem; 
+        }
+        .update-zone button { padding: 8px 12px; background: #3498db; border-radius: 6px; font-size: 0.9rem; }
+
+        .btn-delete { background-color: #c0392b; padding: 8px 15px; border-radius: 6px; font-size: 0.9rem; }
+
+        /* 底部控制面板 */
+        .bottom-panel {
+            background-color: #2a2a2a;
+            border-top: 1px solid #444;
+            padding: 15px 15px 25px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+        }
+        .input-row input { flex: 1; min-width: 0; }
+
+        input {
+            background-color: #444;
+            border: 1px solid #555;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+        }
+        input:focus { border-color: #27ae60; }
+        
+        button { border: none; color: white; cursor: pointer; font-weight: bold; transition: 0.1s; }
+        button:active { transform: scale(0.98); opacity: 0.8; }
+
+        #addBtn { 
+            background-color: #27ae60; 
+            padding: 14px; 
+            border-radius: 8px; 
+            font-size: 1.1rem;
+            width: 100%;
+        }
+
+        /* 選單 Modal 樣式 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(2px);
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #2a2a2a;
+            padding: 25px;
+            border-radius: 12px;
+            width: 85%;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .modal-content h3 {
+            text-align: center;
+            margin-bottom: 5px;
+            color: #f1c40f;
+        }
+
+        .list-btn {
+            background: #8e44ad;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+        }
+
+        .close-btn {
+            background: #7f8c8d;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 選單彈窗 -->
+    <div id="menuModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>載入預設清單</h3>
+            <button class="list-btn" onclick="initAudio(); loadList('HOME')">HOME</button>
+            <button class="list-btn" onclick="initAudio(); loadList('HOME2')">HOME2</button>
+            <button class="close-btn" onclick="closeMenu()">關閉</button>
+        </div>
+    </div>
+
+    <div class="header">
+        <div class="header-left">
+            <button id="menuBtn" onclick="openMenu()">☰</button>
+        </div>
+        <div id="currentTimeDisplay">00:00:00</div>
+        <div class="header-right">
+            <button id="clearAllBtn" onclick="clearAllTimers()">清除全部</button>
+        </div>
+    </div>
+
+    <div class="records-list" id="recordsList"></div>
+
+    <div class="bottom-panel">
+        <div class="input-row">
+            <input type="text" id="nameInput" placeholder="名稱">
+            <input type="number" id="timeInput" placeholder="時分秒 (如10130)">
+        </div>
+        <button id="addBtn">ADD</button>
+    </div>
+
+    <script>
+        const recordsList = document.getElementById('recordsList');
+        const nameInput = document.getElementById('nameInput');
+        const timeInput = document.getElementById('timeInput');
+        const addBtn = document.getElementById('addBtn');
+        const currentTimeDisplay = document.getElementById('currentTimeDisplay');
+        const menuModal = document.getElementById('menuModal');
+
+        // 固定增加 5 分鐘蘑菇重生時間
+        const mushroom_reborn_seconds = 300;
+
+        let timers =[];
+        let audioCtx = null;
+
+        // 預設清單資料
+        const presetLists = {
+            "HOME1":["紫微殿", "南大", "小農場", "白鶴", "康樂台", "新竹車站"],
+            "HOME2":["揪揪嘴", "一大箱", "我送你離開", "鐵製竹橋", "量測中心", "比拉伽教會", "文化公園", "變電箱", "鳥鳥變電箱"]
+        };
+
+        // 選單功能
+        function openMenu() {
+            menuModal.classList.add('active');
+        }
+
+        function closeMenu() {
+            menuModal.classList.remove('active');
+        }
+
+        // 點擊背景關閉選單
+        menuModal.addEventListener('click', (e) => {
+            if (e.target === menuModal) closeMenu();
+        });
+
+        function loadList(listName) {
+            const list = presetLists[listName];
+            if (list) {
+                list.forEach((name, index) => {
+                    timers.push({
+                        id: Date.now() + index, // 避免 id 重複
+                        name: name,
+                        targetTime: null,       // 預設為重設狀態
+                        alerted: false,
+                        alerted30: false
+                    });
+                });
+                sortAndRender();
+            }
+            closeMenu();
+        }
+
+        // 一鍵清除所有紀錄
+        window.clearAllTimers = function() {
+            if (timers.length === 0) return;
+            if (confirm("確定要清除所有的紀錄嗎？")) {
+                timers =[];
+                sortAndRender();
+            }
+        };
+
+        // 初始化音效引擎
+        window.initAudio = function() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        };
+        
+        // 播放 3 個音符 (支援 delay 延遲播放)
+        function playSuccessMelody(delay = 0) {
+            if (!audioCtx) return;
+            const now = audioCtx.currentTime + delay;
+            
+            const notes =[523.25, 659.25, 783.99]; 
+            
+            notes.forEach((freq, index) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.type = 'triangle';
+                
+                const startTime = now + (index * 0.15);
+                osc.frequency.setValueAtTime(freq, startTime);
+                
+                gain.gain.setValueAtTime(0.5, startTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, startTime + 0.15);
+                
+                osc.start(startTime);
+                osc.stop(startTime + 0.15);
+            });
+        }
+
+        // 連續播放兩次 3 個音符
+        function playDoubleSuccessMelody() {
+            playSuccessMelody(0);
+            playSuccessMelody(0.6); // 延遲0.6秒播放第二次
+        }
+
+        function updateClock() {
+            const now = new Date();
+            currentTimeDisplay.textContent = now.toTimeString().split(' ')[0];
+            renderTimers();
+            requestAnimationFrame(updateClock);
+        }
+        updateClock();
+
+        // 解析時間：末兩位秒、往前兩位分、剩餘為時
+        function parseInputTime(val) {
+            const total = Math.abs(parseInt(val)) || 0;
+            const secs = total % 100;
+            const mins = Math.floor(total / 100) % 100;
+            const hrs = Math.floor(total / 10000);
+            return (hrs * 3600) + (mins * 60) + secs;
+        }
+
+        // 格式化倒數計時為 0:00 或 0:00:00
+        function formatCountdown(ms) {
+            const isNegative = ms < 0;
+            const absMs = Math.abs(ms);
+            const totalSecs = Math.floor(absMs / 1000);
+            
+            const h = Math.floor(totalSecs / 3600);
+            const m = String(Math.floor((totalSecs % 3600) / 60)).padStart(2, '0');
+            const s = String(totalSecs % 60).padStart(2, '0');
+            
+            if (h > 0) {
+                return `${isNegative ? '-' : ''}${h}:${m}:${s}`;
+            }
+            return `${isNegative ? '-' : ''}${m}:${s}`;
+        }
+
+        function sortAndRender() {
+            timers.sort((a, b) => {
+                if (a.targetTime === b.targetTime) return 0;
+                if (a.targetTime === null) return 1;
+                if (b.targetTime === null) return -1;
+                return a.targetTime - b.targetTime;
+            });
+            
+            recordsList.innerHTML = '';
+            timers.forEach(t => {
+                const item = document.createElement('div');
+                item.className = `record-item ${t.targetTime === null ? 'stopped' : ''}`;
+                
+                item.innerHTML = `
+                    <div class="item-top">
+                        <span class="record-name">${t.name}</span>
+                        <span class="record-timer" id="timer-${t.id}">--:--</span>
+                    </div>
+                    <div class="item-bottom">
+                        <div class="update-zone">
+                            <input type="number" placeholder="新時間" id="input-${t.id}" onkeydown="if(event.key === 'Enter') { initAudio(); resetRow(${t.id}); }">
+                            <button onclick="initAudio(); resetRow(${t.id})">重設</button>
+                        </div>
+                        <button class="btn-delete" onclick="deleteRow(${t.id})">刪除</button>
+                    </div>
+                `;
+                recordsList.appendChild(item);
+            });
+        }
+
+        function addTimer() {
+            const name = nameInput.value.trim() || '未命名';
+            const val = timeInput.value;
+            
+            let targetTime = null;
+            let alerted = false;   // 1 分鐘響鈴狀態
+            let alerted30 = false; // 30 秒響鈴狀態
+            
+            if (val) {
+                const inputSecs = parseInputTime(val);
+                targetTime = Date.now() + (inputSecs + mushroom_reborn_seconds) * 1000;
+                alerted = (targetTime - Date.now() <= 60000);
+                alerted30 = (targetTime - Date.now() <= 30000);
+            }
+
+            timers.push({
+                id: Date.now() + Math.random(),
+                name: name,
+                targetTime: targetTime,
+                alerted: alerted,
+                alerted30: alerted30
+            });
+
+            nameInput.value = '';
+            timeInput.value = '';
+            nameInput.focus(); 
+            sortAndRender();
+        }
+
+        window.resetRow = function(id) {
+            const inputEl = document.getElementById(`input-${id}`);
+            const timer = timers.find(t => t.id === id);
+            
+            if (timer) {
+                if (inputEl.value.trim() === "") {
+                    timer.targetTime = null;
+                    timer.alerted = false;
+                    timer.alerted30 = false;
+                } else {
+                    const newSecs = parseInputTime(inputEl.value) + mushroom_reborn_seconds;
+                    timer.targetTime = Date.now() + (newSecs * 1000);
+                    timer.alerted = (timer.targetTime - Date.now() <= 60000);
+                    timer.alerted30 = (timer.targetTime - Date.now() <= 30000);
+                }
+                sortAndRender();
+            }
+        };
+
+        window.deleteRow = function(id) {
+            timers = timers.filter(t => t.id !== id);
+            sortAndRender();
+        };
+
+        function renderTimers() {
+            const now = Date.now();
+            timers.forEach(t => {
+                const el = document.getElementById(`timer-${t.id}`);
+                if (el) {
+                    if (t.targetTime === null) {
+                        el.textContent = "00:00";
+                        el.classList.remove('timer-expired');
+                    } else {
+                        const diff = t.targetTime - now;
+                        el.textContent = formatCountdown(diff);
+                        
+                        if (diff < 0) {
+                            el.classList.add('timer-expired');
+                        } else {
+                            el.classList.remove('timer-expired');
+                        }
+
+                        // 判斷是否剩餘 1 分鐘（且大於30秒），播放單次旋律
+                        if (diff <= 60000 && diff > 30000 && !t.alerted) {
+                            t.alerted = true; 
+                            playSuccessMelody();
+                        }
+
+                        // 判斷是否剩餘 30 秒，播放連續兩次旋律
+                        if (diff <= 30000 && !t.alerted30) {
+                            t.alerted = true; // 確保1分鐘的不會補發
+                            t.alerted30 = true;
+                            playDoubleSuccessMelody();
+                        }
+                    }
+                }
+            });
+        }
+
+        addBtn.addEventListener('click', () => {
+            initAudio(); 
+            addTimer();
+        });
+
+        [nameInput, timeInput].forEach(input => {
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    initAudio();
+                    addTimer();
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
