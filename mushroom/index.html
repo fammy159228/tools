@@ -351,6 +351,13 @@
             playSuccessMelody(0.6); // 延遲0.6秒播放第二次
         }
 
+        // 新增一個震動輔助函數，避免不支援的瀏覽器報錯
+        function triggerVibrate(pattern) {
+            if ("vibrate" in navigator) {
+                navigator.vibrate(pattern);
+            }
+        }
+
         function updateClock() {
             const now = new Date();
             currentTimeDisplay.textContent = now.toTimeString().split(' ')[0];
@@ -489,6 +496,7 @@
                         if (diff <= 60000 && diff > 30000 && !t.alerted) {
                             t.alerted = true; 
                             playSuccessMelody();
+                            triggerVibrate(400); // 震動
                         }
 
                         // 判斷是否剩餘 30 秒，播放連續兩次旋律
@@ -496,6 +504,7 @@
                             t.alerted = true; // 確保1分鐘的不會補發
                             t.alerted30 = true;
                             playDoubleSuccessMelody();
+                            triggerVibrate([400, 200, 400]); // 震動
                         }
                     }
                 }
