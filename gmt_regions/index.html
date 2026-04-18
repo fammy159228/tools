@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世界 GMT 時區時間 (暗色密集版)</title>
+    <style>
+        /* 整體背景設為深色，文字設為淺色 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212; 
+            color: #e0e0e0; 
+            margin: 0;
+            padding: 15px;
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        /* 縮小間距，並讓每個卡片的最小寬度變小 (150px) 以提高密度 */
+        .clock-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px; 
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        /* 卡片改為深灰色，並縮小內邊距 (padding) */
+        .clock-card {
+            background-color: #1e1e1e;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            padding: 10px;
+            text-align: center;
+            transition: transform 0.2s;
+            border: 1px solid #333; /* 加上淡淡的邊框讓卡片更立體 */
+        }
+        .clock-card:hover {
+            transform: translateY(-3px);
+            background-color: #2a2a2a;
+        }
+        /* 縮小字體 */
+        .gmt-label {
+            font-size: 0.85em;
+            font-weight: bold;
+            color: #64b5f6; /* 適合暗色的亮藍色 */
+            margin-bottom: 3px;
+        }
+        .location {
+            font-size: 1.2em;
+            color: #dddddd;
+            margin-bottom: 8px;
+            /* 讓過長的文字可以省略顯示 */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .time-display {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #ffffff;
+            font-variant-numeric: tabular-nums;
+        }
+        /* 特別標記台北的暗色模式樣式 */
+        .highlight-taipei {
+            border: 1px solid #ff5252;
+            background-color: #2a1b1b;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>全球 GMT 時區現在時間</h1>
+    <div class="clock-container" id="clocks">
+        </div>
+
+    <script>
+        const timezones = [
+            { offset: -12, rep: "" },
+            { offset: -11, rep: "p, 帕果帕果" },
+            { offset: -10, rep: "t, 大溪地" },
+            { offset: -9, rep: "g, 甘比爾群島" },
+            { offset: -8, rep: "ak, 安克拉治" },
+            { offset: -7, rep: "h, 白馬市" },
+            { offset: -6, rep: "b, 巴爾特拉" },
+            { offset: -5, rep: "e, 奧克拉荷馬城" },
+            { offset: -4, rep: "b, 巴爾的摩" },
+            { offset: -3, rep: "g, 格萊斯貝" },
+            { offset: -2, rep: "sheng, 聖皮埃" },
+            { offset: -1, rep: "pl, 培亞" },
+            { offset: 0, rep: "a, 阿比尚" },
+            { offset: 1, rep: "a, 阿布賈" },
+            { offset: 2, rep: "f, 法蘭克福, 德國" },
+            { offset: 3, rep: "b, 巴格達" },
+            { offset: 4, rep: "a, 阿布達比" },
+            { offset: 5, rep: "l, 拉合爾" },
+            { offset: 6, rep: "d, 達卡, 孟加拉" },
+            { offset: 7, rep: "d, 達維斯站" },
+            { offset: 8, rep: "台北, 台灣", highlight: true },
+            { offset: 9, rep: "c, 長崎" },
+            { offset: 10, rep: "h, 阿加尼亞" },
+            { offset: 11, rep: "af, 愛發提" },
+            { offset: 12, rep: "k, 瓜加林環礁" },
+            { offset: 13, rep: "ap, 阿皮亞" },
+            { offset: 14, rep: "" }
+        ];
+
+        const container = document.getElementById('clocks');
+
+        timezones.forEach((tz, index) => {
+            const gmtText = tz.offset >= 0 ? `GMT+${tz.offset}` : `GMT${tz.offset}`;
+            const highlightClass = tz.highlight ? 'highlight-taipei' : '';
+            
+            const card = document.createElement('div');
+            card.className = `clock-card ${highlightClass}`;
+            card.innerHTML = `
+                <div class="gmt-label">${gmtText}</div>
+                <div class="location" title="${tz.rep}">${tz.rep}</div>
+                <div class="time-display" id="time-${index}">--:--:--</div>
+            `;
+            container.appendChild(card);
+        });
+
+        function updateClocks() {
+            const now = new Date();
+            const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+
+            timezones.forEach((tz, index) => {
+                const tzTime = new Date(utcTime + (3600000 * tz.offset));
+                const hours = tzTime.getHours().toString().padStart(2, '0');
+                const minutes = tzTime.getMinutes().toString().padStart(2, '0');
+                const seconds = tzTime.getSeconds().toString().padStart(2, '0');
+                
+                document.getElementById(`time-${index}`).textContent = `${hours}:${minutes}:${seconds}`;
+            });
+        }
+
+        updateClocks();
+        setInterval(updateClocks, 1000);
+
+    </script>
+</body>
+</html>
