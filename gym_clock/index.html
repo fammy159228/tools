@@ -71,6 +71,7 @@
             color: #888888; /* 使用淺灰色做視覺區分 */
             letter-spacing: 2px;
             font-variant-numeric: tabular-nums; 
+			margin-top: 20px; /* 與上方計時器稍微拉開一點距離 */
         }
 
         /* 按鈕控制區 (最下方) */
@@ -162,7 +163,7 @@
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
-            clockDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+            clockDisplay.textContent = `${hours}:${minutes}`;
         }
         // 啟動現在時間的時鐘 (每秒更新)
         setInterval(updateClock, 1000);
