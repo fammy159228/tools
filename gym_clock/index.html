@@ -16,71 +16,75 @@
             font-family: 'Helvetica Neue', Arial, sans-serif;
             background-color: #1e1e1e;
             color: #ffffff;
-            /* 讓 body 填滿整個可見視窗高度 */
             height: 100vh; 
-            /* 解決行動版瀏覽器網址列導致的 vh 偏差 */
             height: 100dvh; 
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* 將內容推向上下兩端 */
+            justify-content: space-between; 
         }
 
-        /* 碼表與時間顯示區 (最上方) */
+        /* 顯示區容器 */
         .display-container {
             flex: 1;
             display: flex;
-            flex-direction: column; /* 改為垂直排列 */
-            align-items: center;    /* 垂直排列時置中 */
-            justify-content: flex-start;
-            padding-top: 20vh; /* 距離頂部一些空間 */
-            gap: 1px; /* 元素之間的間隔 */
+            flex-direction: column; 
+            align-items: center;    
+            justify-content: center; /* 改為置中，讓版面更平衡 */
+            padding-top: 5vh; 
+            gap: 15px; 
+            width: 100%;
         }
 
         /* 主碼表 */
         .stopwatch-text {
-            /* 使用 clamp 讓字體在手機與 PC 之間自動縮放 */
             font-size: clamp(4rem, 13vw, 10rem); 
             font-weight: 300;
             letter-spacing: 2px;
-            /* 強制數字等寬，避免計時跳動時字體寬度變化造成左右晃動 */
+            font-variant-numeric: tabular-nums; 
+            margin-bottom: 10px;
+        }
+
+        /* 2x2 倒數計時器網格 */
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 建立兩欄等寬 */
+            gap: 20px 10px; /* 上下間隔 20px，左右間隔 40px */
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        /* 倒數計時器共用樣式 */
+        .countdown-item {
+            font-size: clamp(4rem, 13vw, 10rem);  /* 稍微縮小字體以適應並排 */
+            font-weight: 300;
+            letter-spacing: 2px;
             font-variant-numeric: tabular-nums; 
         }
 
-        /* 2分鐘倒數計時器 */
-        .countdown-text {
-            font-size: clamp(4rem, 13vw, 10rem); 
-            font-weight: 300;
-            color: #f39c12; /* 使用橘色做視覺區分 */
-            letter-spacing: 2px;
-            font-variant-numeric: tabular-nums; 
-        }
-
-        /* 2.5分鐘倒數計時器 */
-        .countdown-text2 {
-            font-size: clamp(4rem, 13vw, 10rem); 
-            font-weight: 300;
-            color: #3498db; /* 使用藍色做視覺區分 */
-            letter-spacing: 2px;
-            font-variant-numeric: tabular-nums; 
-        }
+        /* 個別倒數計時器顏色 */
+        #countdown-1m { color: #2ecc71; }   /* 綠色 */
+        #countdown-1-5m { color: #9b59b6; } /* 紫色 */
+        #countdown-2m { color: #f39c12; }   /* 橘色 */
+        #countdown-2-5m { color: #3498db; } /* 藍色 */
 
         /* 現在時間 */
         .clock-text {
             font-size: clamp(4rem, 13vw, 10rem); 
             font-weight: 300;
-            color: #888888; /* 使用淺灰色做視覺區分 */
+            color: #cccccc; 
             letter-spacing: 2px;
             font-variant-numeric: tabular-nums; 
-			margin-top: 20px; /* 與上方計時器稍微拉開一點距離 */
+            margin-top: 20px; 
         }
 
-        /* 按鈕控制區 (最下方) */
+        /* 按鈕控制區 */
         .controls-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px; /* 按鈕之間的間距 */
-            padding: 30px 20px 50px 20px; /* 底部保留一點安全空間給手機 */
+            gap: 15px; 
+            padding: 30px 20px 50px 20px; 
             background-color: #2a2a2a;
             border-top-left-radius: 20px;
             border-top-right-radius: 20px;
@@ -90,7 +94,7 @@
         /* 按鈕共用樣式 */
         button {
             flex: 1;
-            max-width: 150px; /* PC 上限制最大寬度 */
+            max-width: 150px; 
             padding: 15px 0;
             font-size: 1.2rem;
             font-weight: bold;
@@ -101,10 +105,7 @@
             transition: transform 0.1s, opacity 0.2s;
         }
 
-        button:active {
-            transform: scale(0.95);
-        }
-
+        button:active { transform: scale(0.95); }
         button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
@@ -116,22 +117,32 @@
         #startBtn { background-color: #27ae60; }
         #resetBtn { background-color: #e74c3c; }
 
-        /* 針對較小螢幕的手機微調 */
+        /* 手機微調 */
         @media (max-width: 350px) {
             button {
                 font-size: 1rem;
                 padding: 12px 0;
             }
             .controls-container { gap: 10px; }
+            .countdown-grid { gap: 10px 20px; }
         }
     </style>
 </head>
 <body>
 
     <div class="display-container">
+        <!-- 最上方：主碼表 -->
         <div class="stopwatch-text" id="display">00:00:00</div>
-        <div class="countdown-text" id="countdown">02:00</div>
-        <div class="countdown-text2" id="countdown2">02:30</div>
+        
+        <!-- 中間：2x2 倒數計時網格 -->
+        <div class="countdown-grid">
+            <div class="countdown-item" id="countdown-1m">1:00</div>
+            <div class="countdown-item" id="countdown-1-5m">1:30</div>
+            <div class="countdown-item" id="countdown-2m">2:00</div>
+            <div class="countdown-item" id="countdown-2-5m">2:30</div>
+        </div>
+
+        <!-- 最下方：現在時間 -->
         <div class="clock-text" id="clock">00:00:00</div>
     </div>
 
@@ -144,14 +155,15 @@
     <script>
         // 取得 DOM 元素
         const display = document.getElementById('display');
-        const countdownDisplay = document.getElementById('countdown');
-        const countdown2Display = document.getElementById('countdown2');
+        const countdown1m = document.getElementById('countdown-1m');
+        const countdown1_5m = document.getElementById('countdown-1-5m');
+        const countdown2m = document.getElementById('countdown-2m');
+        const countdown2_5m = document.getElementById('countdown-2-5m');
         const clockDisplay = document.getElementById('clock');
         const startBtn = document.getElementById('startBtn');
         const pauseBtn = document.getElementById('pauseBtn');
         const resetBtn = document.getElementById('resetBtn');
 
-        // 計時器相關變數
         let startTime = 0;
         let elapsedTime = 0;
         let timerInterval;
@@ -162,14 +174,25 @@
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
             clockDisplay.textContent = `${hours}:${minutes}`;
         }
-        // 啟動現在時間的時鐘 (每秒更新)
         setInterval(updateClock, 1000);
-        updateClock(); // 網頁載入時立刻顯示當下時間
+        updateClock(); 
 
         // ---- 碼表與循環倒數功能 ----
+        
+        // 輔助函式：計算循環倒數並回傳格式化字串 (M:SS，分鐘不補 0)
+        function formatCountdown(cycleSeconds, totalSecondsPassed) {
+            const elapsedInCycle = totalSecondsPassed % cycleSeconds;
+            const remainingSeconds = cycleSeconds - elapsedInCycle;
+            
+            // 分鐘只取數字不使用 padStart，確保開頭不會有 0
+            const minutes = Math.floor(remainingSeconds / 60);
+            const seconds = String(remainingSeconds % 60).padStart(2, '0');
+            
+            return `${minutes}:${seconds}`;
+        }
+
         // 格式化時間並更新畫面 
         function updateDisplay(time) {
             // 1. 更新主碼表 (格式: HH:MM:SS)
@@ -178,32 +201,19 @@
             const seconds = String(Math.floor((time % 60000) / 1000)).padStart(2, '0');
             display.textContent = `${hours}:${minutes}:${seconds}`;
 
-            const totalSecondsPassed = Math.floor(time / 1000); // 經過的總秒數
+            const totalSecondsPassed = Math.floor(time / 1000); 
 
-            // 2. 更新 2 分鐘循環倒數 (格式: MM:SS)
-            const cycleSeconds1 = 120; // 2 分鐘 = 120 秒
-            const elapsedInCycle1 = totalSecondsPassed % cycleSeconds1;
-            const remainingSeconds1 = cycleSeconds1 - elapsedInCycle1;
-
-            const cdMinutes1 = String(Math.floor(remainingSeconds1 / 60)).padStart(2, '0');
-            const cdSeconds1 = String(remainingSeconds1 % 60).padStart(2, '0');
-            countdownDisplay.textContent = `${cdMinutes1}:${cdSeconds1}`;
-
-            // 3. 更新 2.5 分鐘循環倒數 (格式: MM:SS)
-            const cycleSeconds2 = 150; // 2.5 分鐘 = 150 秒
-            const elapsedInCycle2 = totalSecondsPassed % cycleSeconds2;
-            const remainingSeconds2 = cycleSeconds2 - elapsedInCycle2;
-
-            const cdMinutes2 = String(Math.floor(remainingSeconds2 / 60)).padStart(2, '0');
-            const cdSeconds2 = String(remainingSeconds2 % 60).padStart(2, '0');
-            countdown2Display.textContent = `${cdMinutes2}:${cdSeconds2}`;
+            // 2. 統一更新四個循環倒數
+            countdown1m.textContent = formatCountdown(60, totalSecondsPassed);     // 1分鐘 (60秒)
+            countdown1_5m.textContent = formatCountdown(90, totalSecondsPassed);   // 1.5分鐘 (90秒)
+            countdown2m.textContent = formatCountdown(120, totalSecondsPassed);    // 2分鐘 (120秒)
+            countdown2_5m.textContent = formatCountdown(150, totalSecondsPassed);  // 2.5分鐘 (150秒)
         }
 
         // 計時器循環函式
         function update() {
             elapsedTime = Date.now() - startTime;
             updateDisplay(elapsedTime);
-            // 依然使用 requestAnimationFrame 確保背景計時的準確性
             timerInterval = requestAnimationFrame(update);
         }
 
@@ -213,8 +223,6 @@
                 startTime = Date.now() - elapsedTime; 
                 timerInterval = requestAnimationFrame(update);
                 isRunning = true;
-                
-                // 按鈕狀態切換
                 startBtn.disabled = true;
                 pauseBtn.disabled = false;
             }
@@ -225,8 +233,6 @@
             if (isRunning) {
                 cancelAnimationFrame(timerInterval);
                 isRunning = false;
-                
-                // 按鈕狀態切換
                 startBtn.disabled = false;
                 pauseBtn.disabled = true;
             }
@@ -238,13 +244,10 @@
             isRunning = false;
             elapsedTime = 0;
             updateDisplay(elapsedTime);
-            
-            // 按鈕狀態初始化
             startBtn.disabled = false;
             pauseBtn.disabled = true;
         }
 
-        // 綁定事件監聽器
         startBtn.addEventListener('click', start);
         pauseBtn.addEventListener('click', pause);
         resetBtn.addEventListener('click', reset);
