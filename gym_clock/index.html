@@ -29,7 +29,7 @@
             display: flex;
             flex-direction: column; 
             align-items: center;    
-            justify-content: center; /* 改為置中，讓版面更平衡 */
+            justify-content: center; 
             padding-top: 6vh; 
             gap: 5px; 
             width: 100%;
@@ -47,8 +47,8 @@
         /* 2x2 倒數計時器網格 */
         .countdown-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* 建立兩欄等寬 */
-            gap: 0px 0px; /* 上下間隔 20px，左右間隔 40px */
+            grid-template-columns: 1fr 1fr; 
+            gap: 0px 0px; 
             text-align: center;
             width: 80%;
             max-width: 600px;
@@ -56,17 +56,17 @@
 
         /* 倒數計時器共用樣式 */
         .countdown-item {
-            font-size: clamp(4rem, 13vw, 10rem);  /* 稍微縮小字體以適應並排 */
+            font-size: clamp(4rem, 13vw, 10rem);  
             font-weight: 300;
             letter-spacing: 2px;
             font-variant-numeric: tabular-nums; 
         }
 
         /* 個別倒數計時器顏色 */
-        #countdown-1m { color: #2ecc71; }   /* 綠色 */
-        #countdown-1-5m { color: #9b59b6; } /* 紫色 */
-        #countdown-2m { color: #f39c12; }   /* 橘色 */
-        #countdown-2-5m { color: #3498db; } /* 藍色 */
+        #timer-30s { color: #2ecc71; }   /* 綠色 */
+        #timer-60s { color: #b077c7; }   /* 紫色 */
+        #timer-90s { color: #f39c12; }   /* 橘色 */
+        #timer-120s { color: #3498db; }  /* 藍色 */
 
         /* 現在時間 */
         .clock-text {
@@ -136,10 +136,10 @@
         
         <!-- 中間：2x2 倒數計時網格 -->
         <div class="countdown-grid">
-            <div class="countdown-item" id="countdown-1m">1:00</div>
-            <div class="countdown-item" id="countdown-1-5m">1:30</div>
-            <div class="countdown-item" id="countdown-2m">2:00</div>
-            <div class="countdown-item" id="countdown-2-5m">2:30</div>
+            <div class="countdown-item" id="timer-30s">0:30</div>
+            <div class="countdown-item" id="timer-60s">1:00</div>
+            <div class="countdown-item" id="timer-90s">1:30</div>
+            <div class="countdown-item" id="timer-120s">2:00</div>
         </div>
 
         <!-- 最下方：現在時間 -->
@@ -155,10 +155,10 @@
     <script>
         // 取得 DOM 元素
         const display = document.getElementById('display');
-        const countdown1m = document.getElementById('countdown-1m');
-        const countdown1_5m = document.getElementById('countdown-1-5m');
-        const countdown2m = document.getElementById('countdown-2m');
-        const countdown2_5m = document.getElementById('countdown-2-5m');
+        const timer30s = document.getElementById('timer-30s');
+        const timer60s = document.getElementById('timer-60s');
+        const timer90s = document.getElementById('timer-90s');
+        const timer120s = document.getElementById('timer-120s');
         const clockDisplay = document.getElementById('clock');
         const startBtn = document.getElementById('startBtn');
         const pauseBtn = document.getElementById('pauseBtn');
@@ -181,21 +181,25 @@
 
         // ---- 碼表與循環倒數功能 ----
         
-        // 輔助函式：計算循環倒數並回傳格式化字串 (M:SS，分鐘不補 0)
-        function formatCountdown(cycleSeconds, totalSecondsPassed) {
-            const elapsedInCycle = totalSecondsPassed % cycleSeconds;
-            const remainingSeconds = cycleSeconds - elapsedInCycle;
+        // 輔助函式：依照你提供的邏輯，全部皆為 120 秒 (2分鐘) 的循環，但從不同起點開始倒數
+        function formatCountdown(initialValue, totalSecondsPassed) {
+            // 每 120 秒為一週期，計算當下剩餘的秒數
+            let remaining = initialValue - (totalSecondsPassed % 120);
             
-            // 分鐘只取數字不使用 padStart，確保開頭不會有 0
-            const minutes = Math.floor(remainingSeconds / 60);
-            const seconds = String(remainingSeconds % 60).padStart(2, '0');
+            // 當倒數到底 (不大於 0 時)，自動加上 120 秒接續下一個循環
+            if (remaining <= 0) {
+                remaining += 120;
+            }
+            
+            const minutes = Math.floor(remaining / 60);
+            const seconds = String(remaining % 60).padStart(2, '0');
             
             return `${minutes}:${seconds}`;
         }
 
         // 格式化時間並更新畫面 
         function updateDisplay(time) {
-            // 1. 更新主碼表 (格式: HH:MM:SS)
+            // 1. 更新主碼表
             const hours = String(Math.floor(time / 3600000)).padStart(2, '0');
             const minutes = String(Math.floor((time % 3600000) / 60000)).padStart(2, '0');
             const seconds = String(Math.floor((time % 60000) / 1000)).padStart(2, '0');
@@ -203,11 +207,11 @@
 
             const totalSecondsPassed = Math.floor(time / 1000); 
 
-            // 2. 統一更新四個循環倒數
-            countdown1m.textContent = formatCountdown(60, totalSecondsPassed);     // 1分鐘 (60秒)
-            countdown1_5m.textContent = formatCountdown(90, totalSecondsPassed);   // 1.5分鐘 (90秒)
-            countdown2m.textContent = formatCountdown(120, totalSecondsPassed);    // 2分鐘 (120秒)
-            countdown2_5m.textContent = formatCountdown(150, totalSecondsPassed);  // 2.5分鐘 (150秒)
+            // 2. 更新四個固定間距的循環計時器
+            timer30s.textContent  = formatCountdown(30, totalSecondsPassed);   // 起點：30秒
+            timer60s.textContent  = formatCountdown(60, totalSecondsPassed);   // 起點：60秒 (1:00)
+            timer90s.textContent  = formatCountdown(90, totalSecondsPassed);   // 起點：90秒 (1:30)
+            timer120s.textContent = formatCountdown(120, totalSecondsPassed);  // 起點：120秒 (2:00)
         }
 
         // 計時器循環函式
@@ -251,6 +255,9 @@
         startBtn.addEventListener('click', start);
         pauseBtn.addEventListener('click', pause);
         resetBtn.addEventListener('click', reset);
+
+        // 網頁載入時立刻初始化顯示
+        updateDisplay(0);
     </script>
 </body>
 </html>
