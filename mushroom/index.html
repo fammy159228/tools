@@ -94,10 +94,31 @@
             opacity: 0.7;
         }
 
+        /* 已勾選項目的半透明淡出效果（可自由移除） */
+        .record-item.checked-item {
+            opacity: 0.8;
+            border-left-color: #27ae60;
+        }
+
         .item-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        /* 讓名稱與核取方塊排在一起 */
+        .name-zone {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* 加大 Checkbox 方便手機點擊 */
+        .record-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #27ae60; /* 勾選時的綠色高亮 */
         }
 
         .record-name { font-weight: bold; font-size: 1.1rem; }
@@ -219,7 +240,6 @@
 </head>
 <body>
 
-    <!-- 選單彈窗 -->
     <div id="menuModal" class="modal-overlay">
         <div class="modal-content">
             <h3>載入預設清單</h3>
@@ -261,7 +281,7 @@
         // 固定增加 5 分鐘蘑菇重生時間
         const mushroom_reborn_seconds = 300;
 
-        let timers =[];
+        let timers = [];
         let audioCtx = null;
 
         // 預設清單資料
@@ -290,11 +310,12 @@
             if (list) {
                 list.forEach((name, index) => {
                     timers.push({
-                        id: Date.now() + index, // 避免 id 重複
+                        id: Date.now() + index + Math.random(), // 避免 id 重複
                         name: name,
                         targetTime: null,       // 預設為重設狀態
                         alerted: false,
-                        alerted30: false
+                        alerted30: false,
+                        checked: false          // 新增：初始化勾選狀態
                     });
                 });
                 sortAndRender();
@@ -306,7 +327,7 @@
         window.clearAllTimers = function() {
             if (timers.length === 0) return;
             if (confirm("確定要清除所有的紀錄嗎？")) {
-                timers =[];
+                timers = [];
                 sortAndRender();
             }
         };
@@ -326,7 +347,7 @@
             if (!audioCtx) return;
             const now = audioCtx.currentTime + delay;
             
-            const notes =[523.25, 659.25, 783.99]; 
+            const notes = [523.25, 659.25, 783.99]; 
             
             notes.forEach((freq, index) => {
                 const osc = audioCtx.createOscillator();
@@ -393,6 +414,23 @@
             return `${isNegative ? '-' : ''}${m}:${s}`;
         }
 
+        // 新增：切換勾選狀態的 function
+        window.toggleCheckbox = function(id, isChecked) {
+            const timer = timers.find(t => t.id === id);
+            if (timer) {
+                timer.checked = isChecked;
+                // 更新該卡片的 CSS 類別，避免全畫面重新 render 造成輸入框斷訊
+                const itemEl = document.getElementById(`item-${id}`);
+                if (itemEl) {
+                    if (isChecked) {
+                        itemEl.classList.add('checked-item');
+                    } else {
+                        itemEl.classList.remove('checked-item');
+                    }
+                }
+            }
+        };
+
         function sortAndRender() {
             timers.sort((a, b) => {
                 if (a.targetTime === b.targetTime) return 0;
@@ -404,11 +442,16 @@
             recordsList.innerHTML = '';
             timers.forEach(t => {
                 const item = document.createElement('div');
-                item.className = `record-item ${t.targetTime === null ? 'stopped' : ''}`;
+                // 新增：如果資料裡是勾選狀態，加上 'checked-item' 樣式
+                item.className = `record-item ${t.targetTime === null ? 'stopped' : ''} ${t.checked ? 'checked-item' : ''}`;
+                item.id = `item-${t.id}`;
                 
                 item.innerHTML = `
                     <div class="item-top">
-                        <span class="record-name">${t.name}</span>
+                        <div class="name-zone">
+                            <input type="checkbox" class="record-checkbox" ${t.checked ? 'checked' : ''} onchange="toggleCheckbox(${t.id}, this.checked)">
+                            <span class="record-name">${t.name}</span>
+                        </div>
                         <span class="record-timer" id="timer-${t.id}">--:--</span>
                     </div>
                     <div class="item-bottom">
@@ -443,7 +486,8 @@
                 name: name,
                 targetTime: targetTime,
                 alerted: alerted,
-                alerted30: alerted30
+                alerted30: alerted30,
+                checked: false // 新增：初始化勾選狀態
             });
 
             nameInput.value = '';
