@@ -1626,12 +1626,76 @@
                                 <div class="timeline-card-left">
                                     <h3 class="timeline-title">超商採買 ｜ 準備明日補給與早餐 🏪</h3>
                                     <p class="timeline-desc">吃完燒肉後，順路至飯店周邊的便利商店購買翌日的早餐與長途車上的補給品。由於第二天一早 09:15 就要在新宿西口集合搭乘長途遊覽車前往長岡（單程約 4.5 小時），建議準備充足的水分、麵包、飯糰或零食，在車上享用充飢。</p>
-                                    <div class="timeline-route-info">
-                                        <div class="route-info-row"><strong>🏪 推薦超商位置：</strong></div>
-                                        <div class="route-info-row" style="margin-left: 0.8rem; font-size: 0.8rem; color: #10b981;">• <strong>FamilyMart (歌舞伎町二丁目店)：</strong>飯店東南方 (步行 1 分鐘，約 80 米)</div>
-                                        <div class="route-info-row" style="margin-left: 0.8rem; font-size: 0.8rem; color: #3b82f6;">• <strong>Lawson (歌舞伎町二丁目店)：</strong>飯店東方 (步行 1.5 分鐘，約 100 米)</div>
-                                        <div class="route-info-row" style="margin-left: 0.8rem; font-size: 0.8rem; color: #f97316;">• <strong>7-Eleven (新宿歌舞伎町2丁目店)：</strong>飯店西北方職安通り上 (步行 2 分鐘，約 120 米)</div>
-                                        <div class="route-info-row" style="margin-top: 0.4rem; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 0.4rem;"><strong>採買建議：</strong>明日早餐（飯糰/三明治）、大瓶礦泉水、點心與長途車小零食</div>
+                                    <div class="timeline-route-info" style="display: flex; flex-direction: column; gap: 1rem;">
+                                        <div><strong>🏪 推薦超商位置與步行路線：</strong></div>
+                                        
+                                        <!-- FamilyMart -->
+                                        <div style="border-left: 3px solid #10b981; padding-left: 0.8rem;">
+                                            <div style="font-size: 0.85rem; color: #10b981; font-weight: bold; margin-bottom: 0.3rem;">• FamilyMart (歌舞伎町二丁目店)</div>
+                                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.5rem;">飯店東南方 (步行 1 分鐘，約 80 米)</div>
+                                            <button class="map-toggle-btn" onclick="toggleMap(this, 'ホテルヴィラフォンテーヌ東京新宿', '東京都新宿区歌舞伎町2-19-13', 'w')" style="margin-bottom: 0.5rem;">
+                                                <svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+                                                <span>顯示 FamilyMart 步行路線</span>
+                                            </button>
+                                            <div class="map-container-wrapper" style="display: none;">
+                                                <div class="map-details">
+                                                    <span class="map-detail-badge">估算距離: ~80 m</span>
+                                                    <span class="map-detail-badge">步行時間: ~1 分鐘</span>
+                                                    <a class="map-external-link" href="https://maps.app.goo.gl/MEgNskwqxkJ5rSD2A" target="_blank">
+                                                        開啟外部導航 ↗
+                                                    </a>
+                                                </div>
+                                                <div class="iframe-container">
+                                                    <div class="map-placeholder">🔍 地圖載入中...</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Lawson -->
+                                        <div style="border-left: 3px solid #3b82f6; padding-left: 0.8rem;">
+                                            <div style="font-size: 0.85rem; color: #3b82f6; font-weight: bold; margin-bottom: 0.3rem;">• Lawson (歌舞伎町二丁目店)</div>
+                                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.5rem;">飯店東方 (步行 1.5 分鐘，約 100 米)</div>
+                                            <button class="map-toggle-btn" onclick="toggleMap(this, 'ホテルヴィラフォンテーヌ東京新宿', '東京都新宿区歌舞伎町2-19-10', 'w')" style="margin-bottom: 0.5rem;">
+                                                <svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+                                                <span>顯示 Lawson 步行路線</span>
+                                            </button>
+                                            <div class="map-container-wrapper" style="display: none;">
+                                                <div class="map-details">
+                                                    <span class="map-detail-badge">估算距離: ~180 m</span>
+                                                    <span class="map-detail-badge">步行時間: ~2 分鐘</span>
+                                                    <a class="map-external-link" href="https://maps.app.goo.gl/JKQzto4RhJgAUuzt5" target="_blank">
+                                                        開啟外部導航 ↗
+                                                    </a>
+                                                </div>
+                                                <div class="iframe-container">
+                                                    <div class="map-placeholder">🔍 地圖載入中...</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 7-Eleven -->
+                                        <div style="border-left: 3px solid #f97316; padding-left: 0.8rem;">
+                                            <div style="font-size: 0.85rem; color: #f97316; font-weight: bold; margin-bottom: 0.3rem;">• 7-Eleven (新宿歌舞伎町2丁目店)</div>
+                                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.5rem;">飯店西北方職安通り上 (步行 2 分鐘，約 120 米)</div>
+                                            <button class="map-toggle-btn" onclick="toggleMap(this, 'ホテルヴィラフォンテーヌ東京新宿', '東京都新宿区歌舞伎町2-31-11', 'w')" style="margin-bottom: 0.5rem;">
+                                                <svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+                                                <span>顯示 7-Eleven 步行路線</span>
+                                            </button>
+                                            <div class="map-container-wrapper" style="display: none;">
+                                                <div class="map-details">
+                                                    <span class="map-detail-badge">估算距離: ~50 m</span>
+                                                    <span class="map-detail-badge">步行時間: ~1 分鐘</span>
+                                                    <a class="map-external-link" href="https://maps.app.goo.gl/3SMzu3vD6hYQBVaG7" target="_blank">
+                                                        開啟外部導航 ↗
+                                                    </a>
+                                                </div>
+                                                <div class="iframe-container">
+                                                    <div class="map-placeholder">🔍 地圖載入中...</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div style="margin-top: 0.4rem; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 0.4rem;"><strong>採買建議：</strong>明日早餐（飯糰/三明治）、大瓶礦泉水、點心與長途車小零食</div>
                                     </div>
                                 </div>
                                 <div class="timeline-card-right">
@@ -1699,7 +1763,7 @@
                     <div class="day-header">
                         <div class="day-title-wrap">
                             <h2>第二天：日本之最！長岡花火大會</h2>
-                            <p style="color: var(--text-secondary); margin-top: 0.3rem;">新宿西口 ➡️ 長岡會場 ➡️ 越後湯澤溫泉</p>
+                            <p style="color: var(--text-secondary); margin-top: 0.3rem;">工學院大學前 ➡️ 長岡會場 ➡️ 越後湯澤溫泉</p>
                         </div>
                     </div>
 
@@ -1712,7 +1776,7 @@
                                 <span class="flow-arrow-transport" style="color:var(--transit-walk)">步行 8 mins</span>
                                 <div class="flow-arrow-line"></div>
                             </div>
-                            <div class="flow-node">新宿西口 (09:15 集合)</div>
+                            <div class="flow-node">工學院大學前 (09:15 集合)</div>
                             <div class="flow-arrow">
                                 <span class="flow-arrow-transport" style="color:var(--transit-bus)">花火專車 (長途)</span>
                                 <div class="flow-arrow-line"></div>
@@ -1735,27 +1799,28 @@
                             </div>
                             <div class="timeline-time-area">
                                 <span class="badge badge-confirmed">確定的行程</span>
-                                <span class="timeline-time">08:55 - 09:10</span>
+                                <span class="timeline-time">08:50 - 09:00</span>
                             </div>
                             <div class="timeline-card">
 <div class="timeline-card-left">
 <h3 class="timeline-title">飯店出發 ➡️ 新宿西口集合 🚶</h3>
-                                <p class="timeline-desc">提早辦理退房並攜帶簡便行李，步行前往新宿西口遊覽車集合地。花火大會當天車流量極大，旅遊巴士會於 09:15 準時發車，務必於 09:10 前完成報到。</p>
+                                <p class="timeline-desc">提早辦理退房並攜帶簡便行李，步行前往新宿西口遊覽車集合地點。工作人員將手持「AsiaYo」告示牌協助報到。請務必於 09:00 前完成報到，巴士將於 09:15 準時出發。</p>
                                 <div class="timeline-route-info">
-                                    <div class="route-info-row"><strong>集合地點：</strong>新宿西口指定乘車處 (詳細月台將於出發前一日通知)</div>
+                                    <div class="route-info-row"><strong>報到時間：</strong>09:00 集合報到 ｜ 09:15 準時出發</div>
+                                    <div class="route-info-row"><strong>集合地點：</strong>新宿駅 西口 工學院大學前（對面可看到京王廣場大飯店 KEIO PLAZA HOTEL）</div>
                                     <div class="route-info-row"><strong>步行路線：</strong>從飯店步行約 850 公尺 (預估約 10 分鐘)</div>
                                 </div>
                                 
                                 <!-- Google Map Button -->
-                                <button class="map-toggle-btn" onclick="toggleMap(this, 'ホテルヴィラフォンテーヌ東京新宿', '新宿駅西口', 'w')">
+                                <button class="map-toggle-btn" onclick="toggleMap(this, 'ホテルヴィラフォンテーヌ東京新宿', '新宿駅西口 工学院大学前', 'w')">
                                     <svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
-                                    <span>顯示 步行至新宿西口路線</span>
+                                    <span>顯示 步行至工學院大學前路線</span>
                                 </button>
                                 <div class="map-container-wrapper" style="display: none;">
                                     <div class="map-details">
                                         <span class="map-detail-badge">估算距離: ~850 m</span>
                                         <span class="map-detail-badge">步行時間: ~10 分鐘</span>
-                                        <a class="map-external-link" href="https://www.google.com/maps/dir/?api=1&origin=ホテルヴィラフォンテーヌ東京新宿&destination=新宿駅西口&travelmode=walking" target="_blank">
+                                        <a class="map-external-link" href="https://www.google.com/maps/dir/?api=1&origin=ホテルヴィラフォンテーヌ東京新宿&destination=新宿駅西口+工学院大学前&travelmode=walking" target="_blank">
                                             開啟外部導航 ↗
                                         </a>
                                     </div>
@@ -1765,7 +1830,7 @@
                                 </div>
                                 </div>
                                 <div class="timeline-card-right">
-<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg" onclick="window.open('https://www.google.com/maps/dir/?api=1&origin=ホテルヴィラフォンテーヌ東京新宿&destination=新宿駅西口&travelmode=walking', '_blank')">
+<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg" onclick="window.open('https://www.google.com/maps/dir/?api=1&origin=ホテルヴィラフォンテーヌ東京新宿&destination=新宿駅西口+工学院大学前&travelmode=walking', '_blank')">
                                         <rect width="260" height="160" rx="12" fill="none"/>
                                         <defs>
                                             <pattern id="grid-d2s1" width="16" height="16" patternUnits="userSpaceOnUse">
@@ -1782,7 +1847,7 @@
                                         <circle cx="180" cy="40" r="5" fill="#10b981"/>
                                         <circle cx="80" cy="120" r="5" fill="#ef4444"/>
                                         <text x="180" y="30" fill="#94a3b8" font-size="9" text-anchor="middle" font-family="system-ui, sans-serif">Villa Fontaine</text>
-                                        <text x="80" y="140" fill="#94a3b8" font-size="9" text-anchor="middle" font-family="system-ui, sans-serif">新宿西口</text>
+                                        <text x="80" y="140" fill="#94a3b8" font-size="9" text-anchor="middle" font-family="system-ui, sans-serif">工學院大學前</text>
                                         <rect x="155" y="115" width="90" height="30" rx="15" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
                                         <text x="200" y="128" fill="#f8fafc" font-size="9" font-weight="bold" text-anchor="middle" font-family="system-ui, sans-serif">🚶 步行</text>
                                         <text x="200" y="140" fill="#94a3b8" font-size="8" text-anchor="middle" font-family="system-ui, sans-serif">~10 分鐘 | 850m</text>
@@ -1803,22 +1868,23 @@
                             <div class="timeline-card">
 <div class="timeline-card-left">
 <h3 class="timeline-title">花火大會專車：越後長岡長途移動 🚌</h3>
-                                <p class="timeline-desc">搭乘專屬遊覽巴士，經由關越自動車道前往新潟長岡。中途停靠 1-2 個服務區 (SA) 供旅客休息、進食與使用盥洗室。當天會場周邊必有壅塞，請隨行放鬆心情。</p>
+                                <p class="timeline-desc">搭乘專屬遊覽巴士，經由關越自動車道前往新潟長岡。中途預計安排停靠 2 次休息站（一次約 75 分鐘，另一次約 30 分鐘）供旅客休息、進食與使用盥洗室。當天會場周邊易塞車，請隨行放鬆心情。</p>
                                 <div class="timeline-route-info">
-                                    <div class="route-info-row"><strong>交通工具：</strong>花火節特別企劃包車 (直達長岡會場)</div>
-                                    <div class="route-info-row"><strong>車程預估：</strong>約 6.5 小時 (含中途停靠休息與節慶車潮壅塞時間)</div>
+                                    <div class="route-info-row"><strong>交通工具：</strong>花火節特別企劃專車（兩台車同行）</div>
+                                    <div class="route-info-row"><strong>中途休息：</strong>共停靠休息站 2 次（75 mins + 30 mins）</div>
+                                    <div class="route-info-row"><strong>車程預估：</strong>約 6.5 小時（預計 15:45 抵達會場停車場）</div>
                                 </div>
                                 
                                 <!-- Google Map Button -->
-                                <button class="map-toggle-btn" onclick="toggleMap(this, '新宿駅西口', '長岡まつり大花火大会 会場', 'd')">
+                                <button class="map-toggle-btn" onclick="toggleMap(this, '新宿駅西口 工学院大学前', '長岡まつり大花火大会 会場', 'd')">
                                     <svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
-                                    <span>顯示 新宿往新潟長岡大巴路線</span>
+                                    <span>顯示 工學院大學前往新潟長岡大巴路線</span>
                                 </button>
                                 <div class="map-container-wrapper" style="display: none;">
                                     <div class="map-details">
                                         <span class="map-detail-badge">估算距離: ~260 km</span>
                                         <span class="map-detail-badge">行車時間: ~3.5 小時 (無塞車情況)</span>
-                                        <a class="map-external-link" href="https://www.google.com/maps/dir/?api=1&origin=新宿駅西口&destination=長岡まつり大花火大会&travelmode=driving" target="_blank">
+                                        <a class="map-external-link" href="https://www.google.com/maps/dir/?api=1&origin=新宿駅西口+工学院大学前&destination=長岡まつり大花火大会&travelmode=driving" target="_blank">
                                             開啟外部導航 ↗
                                         </a>
                                     </div>
@@ -1828,7 +1894,7 @@
                                 </div>
                                 </div>
                                 <div class="timeline-card-right">
-<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg" onclick="window.open('https://www.google.com/maps/dir/?api=1&origin=新宿駅西口&destination=長岡まつり大花火大会&travelmode=driving', '_blank')">
+<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg" onclick="window.open('https://www.google.com/maps/dir/?api=1&origin=新宿駅西口+工学院大学前&destination=長岡まつり大花火大会&travelmode=driving', '_blank')">
                                         <rect width="260" height="160" rx="12" fill="none"/>
                                         <defs>
                                             <pattern id="grid-d2s2" width="16" height="16" patternUnits="userSpaceOnUse">
@@ -1848,7 +1914,7 @@
                                         <path d="M 30 130 C 80 120, 90 40, 160 50 T 230 40" stroke="url(#grad-d2s2)" stroke-width="4" stroke-linecap="round" fill="none" filter="url(#glow-d2s2)"/>
                                         <circle cx="30" cy="130" r="5" fill="#10b981"/>
                                         <circle cx="230" cy="40" r="5" fill="#ef4444"/>
-                                        <text x="50" y="145" fill="#94a3b8" font-size="9" text-anchor="middle" font-family="system-ui, sans-serif">新宿西口</text>
+                                        <text x="50" y="145" fill="#94a3b8" font-size="9" text-anchor="middle" font-family="system-ui, sans-serif">工學院大學前</text>
                                         <text x="210" y="26" fill="#94a3b8" font-size="9" text-anchor="middle" font-family="system-ui, sans-serif">長岡會場</text>
                                         <rect x="155" y="115" width="90" height="30" rx="15" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
                                         <text x="200" y="128" fill="#f8fafc" font-size="9" font-weight="bold" text-anchor="middle" font-family="system-ui, sans-serif">🚌 觀光巴士</text>
@@ -1870,10 +1936,23 @@
                             <div class="timeline-card">
 <div class="timeline-card-left">
 <h3 class="timeline-title">抵達長岡會場 ｜ 自由活動與準備 📍</h3>
-                                <p class="timeline-desc">遊覽巴士抵達指定停靠點。下車後跟隨導遊引導，前往預訂的專屬有料觀賞席。可先於周邊熱鬧的屋台街（小吃攤位）購買新潟在地美食及充足水份。</p>
+                                <p class="timeline-desc">遊覽巴士預計於 15:45 抵達 B 會場左岸「長岡交流道側」田徑場對面的團體巴士停車場。下車後領取觀賞席門票與會場地圖，前往專屬團體觀賞席（B會場左岸團體席，基準空間約 90cm × 90cm，需與同團旅客互相禮讓使用）。建議施放前 1 小時買妥晚餐並上好洗手間，因開演前排隊人潮極多。</p>
                                 <div class="timeline-route-info">
-                                    <div class="route-info-row"><strong>大會會場：</strong>新潟縣長岡市 信濃川河畔 (長生橋與大手大橋間)</div>
-                                    <div class="route-info-row"><strong>特別建議：</strong>建議於施放前 1 小時買妥晚餐並上好洗手間，因開演前排隊人潮極多。</div>
+                                    <div class="route-info-row"><strong>巴士停靠：</strong>B會場 左岸「長岡交流道側」田徑場對面團體巴士停車場</div>
+                                    <div class="route-info-row"><strong>觀賞位置：</strong>B會場 左岸 團體席（門票與地圖於當天現場發放）</div>
+                                    <div class="route-info-row"><strong>大會狀態：</strong>當天早上 07:00 起，請自行至「長岡花火財團」官網確認最新施放消息</div>
+                                </div>
+                                <div class="checklist-box" style="margin-top: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border-left: 4px solid var(--accent-cyan);">
+                                    <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-cyan); font-size: 0.95rem;">🎒 行前必備與注意事項</h4>
+                                    <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.85rem; line-height: 1.5; color: var(--text-secondary);">
+                                        <li>☔ <strong>雨衣（必備）：</strong>會場內全面禁止撐傘（會遮擋視線且造成危險）。</li>
+                                        <li>👟 <strong>便於行走鞋子：</strong>會場內多為碎石路與斜坡，請勿穿著高跟鞋或涼鞋。</li>
+                                        <li>📸 <strong>相機腳架限制：</strong>腳架高度須控制在坐姿高度內，嚴禁在通道或觀賞席外站立拍攝。</li>
+                                        <li>🧴 <strong>防暑防蚊：</strong>會場極度炎熱，請準備帽子、飲水、扇子，預防中暑。</li>
+                                        <li>🧻 <strong>清潔小包：</strong>準備垃圾袋（需自行帶走垃圾，雨天也可包覆行李防水）與濕紙巾（洗手台極少）。</li>
+                                        <li>🔦 <strong>手電筒：</strong>夜間昏暗、散場視線不佳，建議攜帶照明。</li>
+                                        <li>📶 <strong>通訊提醒：</strong>人潮擁擠時手機極易無訊號，請與同行者約定好走散時的集合地點。</li>
+                                    </ul>
                                 </div>
                                 
                                 <!-- Google Map Button -->
@@ -1969,15 +2048,16 @@
                             </div>
                             <div class="timeline-time-area">
                                 <span class="badge badge-confirmed">確定的行程</span>
-                                <span class="timeline-time">21:30 - 23:45</span>
+                                <span class="timeline-time">22:00 - 00:30</span>
                             </div>
                             <div class="timeline-card">
 <div class="timeline-card-left">
 <h3 class="timeline-title">集合出發 ➡️ 上越綠色廣場飯店 🚌</h3>
-                                <p class="timeline-desc">花火施放完畢後，迅速返回巴士專用停車場。預估 21:45 左右發車，走關越自動車道前往新潟南魚沼山區的「上越綠色廣場飯店」辦理入住。</p>
+                                <p class="timeline-desc">花火大會結束後，請迅速返回團體巴士停車場。預計於 22:00 ~ 22:30 發車，經由關越自動車道前往新潟南魚沼山區的「上越綠色廣場飯店」。因散場人潮及車流龐大，預計於翌日凌晨 00:30 深夜抵達並辦理入住。</p>
                                 <div class="timeline-route-info">
-                                    <div class="route-info-row"><strong>住宿溫泉飯店：</strong>上越綠色廣場飯店 (新潟県南魚沼市樺野沢 112-1)</div>
-                                    <div class="route-info-row"><strong>車程預估：</strong>約 2 小時 (受散場人車潮影響，預計 23:45 抵達)</div>
+                                    <div class="route-info-row"><strong>住宿飯店：</strong>上越綠色廣場飯店 (新潟県南魚沼市樺野沢 112-1)</div>
+                                    <div class="route-info-row"><strong>發車時間：</strong>22:00 ~ 22:30 之間集合發車</div>
+                                    <div class="route-info-row"><strong>車程預估：</strong>約 2 - 2.5 小時 (預定於隔日凌晨 00:30 抵達)</div>
                                 </div>
                                 
                                 <!-- Google Map Button -->
@@ -2048,15 +2128,15 @@
                         <div class="route-flow">
                             <div class="flow-node">上越綠色廣場飯店</div>
                             <div class="flow-arrow">
-                                <span class="flow-arrow-transport" style="color:var(--transit-bus)">接駁巴士 30m</span>
+                                <span class="flow-arrow-transport" style="color:var(--transit-bus)">旅遊巴士 30m</span>
                                 <div class="flow-arrow-line"></div>
                             </div>
                             <div class="flow-node">GALA 湯澤 (纜車+午餐)</div>
                             <div class="flow-arrow">
-                                <span class="flow-arrow-transport" style="color:var(--transit-bus)">接駁巴士 5m</span>
+                                <span class="flow-arrow-transport" style="color:var(--transit-bus)">旅遊巴士 10m</span>
                                 <div class="flow-arrow-line"></div>
                             </div>
-                            <div class="flow-node">越後湯澤站 (14:00 出發)</div>
+                            <div class="flow-node">越後湯澤站 (13:50 出發)</div>
                             <div class="flow-arrow">
                                 <span class="flow-arrow-transport" style="color:var(--transit-bus)">旅遊專車 (回程)</span>
                                 <div class="flow-arrow-line"></div>
@@ -2084,7 +2164,10 @@
                             <div class="timeline-card">
                                 <div class="timeline-card-left">
                                     <h3 class="timeline-title">飯店 Checkout 與出發 🔑</h3>
-                                    <p class="timeline-desc">在清新的南魚沼山景中醒來，悠閒享用早餐並再次享受晨間溫泉。10:15 前整理好行李並辦理 Checkout 退房手續，將行李放置於專屬回程遊覽車上。</p>
+                                    <p class="timeline-desc">在南魚沼山景中享用早餐，並可再次泡溫泉。請於 10:15 前整理好行李辦理 Checkout，巴士於 10:30 準時出發。（※ 說明：隔天出發時間將視前一晚深夜抵達飯店的實際時間進行相應延後調整，若出發延後，後續景點停留時間將縮短。）</p>
+                                    <div class="timeline-route-info">
+                                        <div class="route-info-row"><strong>出發時間：</strong>10:30 準時發車（前一晚若較遲抵達，出發時間將彈性延後）</div>
+                                    </div>
                                 </div>
                                 <div class="timeline-card-right">
                                     <svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
@@ -2114,16 +2197,17 @@
                                 <svg viewBox="0 0 24 24"><path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm4.5-6H6V6h6v5zm6 4.5c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5 1.67-3 1.5-1.5 1.5.67 1.5 1.5zm0-4.5h-5V6h5v5z"/></svg>
                             </div>
                             <div class="timeline-time-area">
-                                <span class="badge badge-tobook">預計要訂的行程</span>
-                                <span class="timeline-time">10:30 - 13:00</span>
+                                <span class="badge badge-confirmed">確定的行程</span>
+                                <span class="timeline-time">11:00 - 13:00</span>
                             </div>
                             <div class="timeline-card">
 <div class="timeline-card-left">
 <h3 class="timeline-title">GALA 湯澤 ｜ 觀景纜車 & 午餐 🚡</h3>
-                                <p class="timeline-desc">搭乘飯店 **10:30** 開出的預約接駁巴士直達越後湯澤站 (11:00 到站)，隨後無縫轉乘 11:05 的夏季免費接駁車前往 GALA 湯澤。搭乘景觀大纜車登上海拔 800 米的山頂，欣賞翠綠群山並在山頂享用午餐。</p>
+                                <p class="timeline-desc">搭乘團體專用遊覽車直達 GALA 湯澤，預計 11:00 抵達。隨後轉乘夏季大纜車登上海拔 800 公尺的山頂，欣賞壯麗翠綠的魚沼山谷景緻並在山頂享用午餐。13:00 集合出發前往越後湯澤站。</p>
                                 <div class="timeline-route-info">
-                                    <div class="route-info-row"><strong>交通：</strong>飯店送迎巴士 (10:30-11:00，預約制) + GALA夏季接駁車 (11:05-11:10)</div>
-                                    <div class="route-info-row"><strong>票券：</strong>GALA 湯澤夏季來回纜車券 + 山頂餐廳午餐券</div>
+                                    <div class="route-info-row"><strong>交通工具：</strong>團體遊覽巴士（飯店 10:30 發車 ➡️ GALA 湯澤 11:00 抵達）</div>
+                                    <div class="route-info-row"><strong>景點時段：</strong>11:00 抵達 / 13:00 集合出發</div>
+                                    <div class="route-info-row"><strong>票券明細：</strong>GALA 湯澤夏季來回觀景纜車券 + 山頂餐廳午餐券</div>
                                 </div>
                                 
                                 <!-- Google Map Button -->
@@ -2134,7 +2218,7 @@
                                 <div class="map-container-wrapper" style="display: none;">
                                     <div class="map-details">
                                         <span class="map-detail-badge">估算距離: ~18 km</span>
-                                        <span class="map-detail-badge">交通時間: ~40 分鐘 (含轉乘)</span>
+                                        <span class="map-detail-badge">交通時間: ~30 分鐘</span>
                                         <a class="map-external-link" href="https://www.google.com/maps/dir/?api=1&origin=ホテルグリーンプラザ上越&destination=GALA湯沢スキー場&travelmode=driving" target="_blank">
                                             開啟外部導航 ↗
                                         </a>
@@ -2167,8 +2251,8 @@
                                         <text x="150" y="70" fill="#94a3b8" font-size="8" text-anchor="middle" font-family="system-ui, sans-serif">越後湯澤站</text>
                                         <text x="210" y="26" fill="#94a3b8" font-size="8" text-anchor="middle" font-family="system-ui, sans-serif">GALA湯澤</text>
                                         <rect x="155" y="115" width="90" height="30" rx="15" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                                        <text x="200" y="128" fill="#f8fafc" font-size="9" font-weight="bold" text-anchor="middle" font-family="system-ui, sans-serif">🚌 接駁+接駁</text>
-                                        <text x="200" y="140" fill="#94a3b8" font-size="8" text-anchor="middle" font-family="system-ui, sans-serif">~40 分鐘 | 18km</text>
+                                        <text x="200" y="128" fill="#f8fafc" font-size="9" font-weight="bold" text-anchor="middle" font-family="system-ui, sans-serif">🚌 觀光巴士</text>
+                                        <text x="200" y="140" fill="#94a3b8" font-size="8" text-anchor="middle" font-family="system-ui, sans-serif">~30 分鐘 | 18km</text>
                                     </svg>
                                 </div>
                             </div>
@@ -2181,32 +2265,63 @@
                             </div>
                             <div class="timeline-time-area">
                                 <span class="badge badge-confirmed">確定的行程</span>
-                                <span class="timeline-time">13:10 - 14:00</span>
+                                <span class="timeline-time">13:10 - 13:50</span>
                             </div>
                             <div class="timeline-card">
-                                <h3 class="timeline-title">越後湯澤車站 ｜ 清酒與伴手禮購物 🍶</h3>
-                                <p class="timeline-desc">抵達越後湯澤站。這裡簡直是美食天堂！前往「Ponshukan (唎酒番所)」體驗投幣品嚐 5 杯新潟在地名酒，並在商場內購買魚沼越光米、新潟名物「笹團子」以及各種米餅煎餅。</p>
-                                <div class="timeline-route-info">
-                                    <div class="route-info-row"><strong>名店：</strong>CoCoLo湯澤、ぽんしゅ館 (Ponshukan)</div>
-                                    <div class="route-info-row"><strong>推薦體驗：</strong>投幣 500 日圓可獲得 5 枚硬幣，品嚐各家大吟釀</div>
+                                <div class="timeline-card-left">
+                                    <h3 class="timeline-title">越後湯澤車站 ｜ 清酒與伴手禮購物 🍶</h3>
+                                    <p class="timeline-desc">遊覽巴士於 13:10 抵達越後湯澤站。前往「ぽんしゅ館 (Ponshukan)」投幣 500 日圓體驗品嚐 5 杯新潟在地名酒大吟釀，並可在 CoCoLo 湯澤商場內購買越光米、新潟名物「笹團子」等名產。請於 13:50 前準時返回遊覽巴士。</p>
+                                    <div class="timeline-route-info">
+                                        <div class="route-info-row"><strong>交通工具：</strong>團體遊覽巴士（GALA 湯澤 13:00 出發 ➡️ 越後湯澤站 13:10 抵達）</div>
+                                        <div class="route-info-row"><strong>停留時段：</strong>13:10 抵達 ｜ 13:50 出發</div>
+                                        <div class="route-info-row"><strong>推薦體驗：</strong>CoCoLo湯澤購物、ぽんしゅ館清酒體驗（投幣 500 日圓可試飲 5 種新潟大吟釀）</div>
+                                    </div>
+                                    
+                                    <!-- Google Map Button -->
+                                    <button class="map-toggle-btn" onclick="toggleMap(this, 'GALA湯沢駅', '越後湯沢駅', 'r')">
+                                        <svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+                                        <span>顯示 GALA 湯澤至越後湯澤站路線</span>
+                                    </button>
+                                    <div class="map-container-wrapper" style="display: none;">
+                                        <div class="map-details">
+                                            <span class="map-detail-badge">估算距離: ~2 km</span>
+                                            <span class="map-detail-badge">乘車時間: ~5 分鐘</span>
+                                            <a class="map-external-link" href="https://www.google.com/maps/dir/?api=1&origin=GALA湯沢駅&destination=越後湯沢駅&travelmode=transit" target="_blank">
+                                                開啟外部導航 ↗
+                                            </a>
+                                        </div>
+                                        <div class="iframe-container">
+                                            <div class="map-placeholder">🔍 地圖載入中...</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                
-                                <!-- Google Map Button -->
-                                <button class="map-toggle-btn" onclick="toggleMap(this, 'GALA湯沢駅', '越後湯沢駅', 'r')">
-                                    <svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
-                                    <span>顯示 GALA 湯澤至越後湯澤站路線</span>
-                                </button>
-                                <div class="map-container-wrapper" style="display: none;">
-                                    <div class="map-details">
-                                        <span class="map-detail-badge">估算距離: ~2 km</span>
-                                        <span class="map-detail-badge">乘車時間: ~5 分鐘</span>
-                                        <a class="map-external-link" href="https://www.google.com/maps/dir/?api=1&origin=GALA湯沢駅&destination=越後湯沢駅&travelmode=transit" target="_blank">
-                                            開啟外部導航 ↗
-                                        </a>
-                                    </div>
-                                    <div class="iframe-container">
-                                        <div class="map-placeholder">🔍 地圖載入中...</div>
-                                    </div>
+                                <div class="timeline-card-right">
+                                    <svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg" onclick="window.open('https://www.google.com/maps/dir/?api=1&origin=GALA湯沢駅&destination=越後湯沢駅&travelmode=transit', '_blank')">
+                                        <rect width="260" height="160" rx="12" fill="none"/>
+                                        <defs>
+                                            <pattern id="grid-d3s3" width="16" height="16" patternUnits="userSpaceOnUse">
+                                                <path d="M 16 0 L 0 0 0 16" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                                            </pattern>
+                                            <filter id="glow-d3s3">
+                                                <feGaussianBlur stdDeviation="2" result="blur"/>
+                                                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                                            </filter>
+                                            <linearGradient id="grad-d3s3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#3b82f6"/>
+                                                <stop offset="100%" stop-color="#10b981"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <rect width="260" height="160" fill="url(#grid-d3s3)" rx="12"/>
+                                        <path d="M 60 50 Q 120 70, 200 110" stroke="rgba(59, 130, 246, 0.15)" stroke-width="8" stroke-linecap="round" fill="none"/>
+                                        <path d="M 60 50 Q 120 70, 200 110" stroke="url(#grad-d3s3)" stroke-width="4" stroke-linecap="round" fill="none" filter="url(#glow-d3s3)"/>
+                                        <circle cx="60" cy="50" r="5" fill="#10b981"/>
+                                        <circle cx="200" cy="110" r="5" fill="#ef4444"/>
+                                        <text x="60" y="38" fill="#94a3b8" font-size="8" text-anchor="middle" font-family="system-ui, sans-serif">GALA湯澤</text>
+                                        <text x="200" y="130" fill="#94a3b8" font-size="8" text-anchor="middle" font-family="system-ui, sans-serif">越後湯澤站</text>
+                                        <rect x="155" y="15" width="90" height="30" rx="15" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                                        <text x="200" y="28" fill="#f8fafc" font-size="9" font-weight="bold" text-anchor="middle" font-family="system-ui, sans-serif">🚌 觀光巴士</text>
+                                        <text x="200" y="40" fill="#94a3b8" font-size="8" text-anchor="middle" font-family="system-ui, sans-serif">~5 分鐘 | 2km</text>
+                                    </svg>
                                 </div>
                             </div>
                         </div>
@@ -2218,15 +2333,16 @@
                             </div>
                             <div class="timeline-time-area">
                                 <span class="badge badge-confirmed">確定的行程</span>
-                                <span class="timeline-time">14:00 - 18:00</span>
+                                <span class="timeline-time">13:50 - 18:00</span>
                             </div>
                             <div class="timeline-card">
 <div class="timeline-card-left">
 <h3 class="timeline-title">越後湯澤站 ➡️ 新宿西口 (回程) 🚌</h3>
-                                <p class="timeline-desc">下午 14:00 回程巴士準時自越後湯澤站東口發車。走關越道返回東京，於傍晚 18:00 左右抵達新宿西口解散。隨後前往新宿站轉乘山手線。</p>
+                                <p class="timeline-desc">下午 13:50 回程巴士自越後湯澤站準時發車。行經關越高速公路返回東京，中途將安排停靠服務區 (SA) 供旅客休息、進食與使用盥洗室，預估於傍晚 18:00 左右返抵新宿站西口解散。</p>
                                 <div class="timeline-route-info">
-                                    <div class="route-info-row"><strong>交通：</strong>回程遊覽專車 (越後湯澤站東口 ➡️ 新宿站西口)</div>
-                                    <div class="route-info-row"><strong>車程：</strong>預估約 4 小時 (受下午路況影響，中途停靠 SA 休息)</div>
+                                    <div class="route-info-row"><strong>交通工具：</strong>回程遊覽專車 (越後湯澤站 13:50 出發 ➡️ 新宿西口 18:00 抵達)</div>
+                                    <div class="route-info-row"><strong>中途休息：</strong>行經關越高速公路，中途安排停靠休息站</div>
+                                    <div class="route-info-row"><strong>車程預估：</strong>約 4 小時 10 分鐘 (包含中途休息，視下午路況可能調整)</div>
                                 </div>
                                 
                                 <!-- Google Map Button -->
